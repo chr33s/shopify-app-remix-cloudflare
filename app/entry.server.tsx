@@ -8,6 +8,7 @@ import type { AppLoadContext, EntryContext } from "@remix-run/cloudflare";
 import { RemixServer } from "@remix-run/react";
 import { isbot } from "isbot";
 import { renderToReadableStream } from "react-dom/server";
+import { addDocumentResponseHeaders } from "./shopify.server";
 
 const ABORT_DELAY = 5000;
 
@@ -21,6 +22,7 @@ export default async function handleRequest(
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   loadContext: AppLoadContext,
 ) {
+  addDocumentResponseHeaders(request, responseHeaders);
   const controller = new AbortController();
   const timeoutId = setTimeout(() => controller.abort(), ABORT_DELAY);
 

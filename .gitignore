@@ -1,8 +1,29 @@
 node_modules
+.DS_Store
 
+/.cache
 /.wrangler
 /build
+/app/build
+/public/build/
+/public/_dev
+/app/public/build
+/prisma/dev.sqlite
+/prisma/dev.sqlite-journal
+database.sqlite
+
 .env
+.env.*
 .dev.vars
 
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+
+/extensions/*/dist
+
 .wrangler
+
+# Ignore shopify files created during app dev
+.shopify/*
+.shopify.lock

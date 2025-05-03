@@ -14,11 +14,15 @@
     "types": [
       "@remix-run/cloudflare",
       "@cloudflare/workers-types",
-      "vite/client"
+      "vite/client",
+      "node"
     ],
     "isolatedModules": true,
     "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "removeComments": false,
     "jsx": "react-jsx",
+    "module": "ESNext",
     "moduleResolution": "Bundler",
     "resolveJsonModule": true,
     "target": "ES2022",

@@ -1,5 +1,5 @@
 {
-  "name": "remix-starter-template",
+  "name": "shopify-app-remix-cloudflare",
   "description": "Build a full-stack web application with Remix.",
   "cloudflare": {
     "label": "Remix Framework Starter",
@@ -14,50 +14,95 @@
     "dash": true
   },
   "dependencies": {
+    "@prisma/client": "^6.2.1",
     "@remix-run/cloudflare": "2.16.5",
     "@remix-run/react": "2.16.5",
     "@remix-run/server-runtime": "2.16.5",
+    "@shopify/app-bridge-react": "^4.1.6",
+    "@shopify/cli": "^3.63.1",
+    "@shopify/polaris": "^12.0.0",
+    "@shopify/shopify-app-remix": "^3.7.0",
+    "@shopify/shopify-app-session-storage-prisma": "^6.0.0",
     "isbot": "5.1.26",
+    "prisma": "^6.2.1",
     "react": "18.3.1",
     "react-dom": "18.3.1"
   },
   "devDependencies": {
     "@cloudflare/workers-types": "^4.20250404.0",
     "@remix-run/dev": "2.16.5",
+    "@remix-run/eslint-config": "^2.16.1",
+    "@remix-run/fs-routes": "^2.16.1",
+    "@remix-run/route-config": "^2.16.1",
+    "@shopify/api-codegen-preset": "^1.1.1",
+    "@types/eslint": "^9.6.1",
+    "@types/node": "^22.2.0",
     "@types/react": "18.3.12",
     "@types/react-dom": "18.3.1",
     "@typescript-eslint/eslint-plugin": "8.31.0",
     "@typescript-eslint/parser": "8.31.0",
     "autoprefixer": "10.4.21",
-    "eslint": "9.25.1",
+    "eslint": "^8.42.0",
+    "eslint-config-prettier": "^10.0.1",
     "eslint-import-resolver-typescript": "3.7.0",
     "eslint-plugin-import": "2.31.0",
     "eslint-plugin-jsx-a11y": "6.10.2",
     "eslint-plugin-react": "7.37.5",
     "eslint-plugin-react-hooks": "5.2.0",
+    "prettier": "^3.2.4",
     "postcss": "8.5.3",
     "tailwindcss": "3.4.17",
     "typescript": "5.8.3",
-    "vite": "5.4.14",
+    "vite": "^6.2.2",
     "vite-tsconfig-paths": "5.1.4",
     "wrangler": "3.114.4"
   },
   "engines": {
-    "node": ">=20.0.0"
+    "node": "^18.20 || ^20.10 || >=21.0.0"
   },
   "private": true,
   "scripts": {
     "build": "remix vite:build",
     "cf-typegen": "wrangler types",
     "check": "tsc && remix vite:build && wrangler deploy --dry-run",
-    "deploy": "npm run build && wrangler deploy",
-    "dev": "remix vite:dev",
+    "deploy": "shopify app deploy",
+    "config:use": "shopify app config use",
+    "env": "shopify app env",
+    "dev": "shopify app dev --use-localhost",
+    "config:link": "shopify app config link",
+    "generate": "shopify app generate",
     "lint": "eslint --ignore-path .gitignore --cache --cache-location ./node_modules/.cache/eslint .",
     "preview": "npm run build && wrangler dev",
-    "start": "wrangler dev",
+    "start": "remix-serve ./build/server/index.js",
+    "docker-start": "npm run setup && npm run start",
+    "setup": "prisma generate && prisma migrate deploy",
+    "shopify": "shopify",
+    "prisma": "prisma",
+    "graphql-codegen": "graphql-codegen",
+    "vite": "vite",
     "typecheck": "tsc",
     "typegen": "wrangler types"
   },
   "sideEffects": false,
-  "type": "module"
+  "type": "module",
+  "workspaces": {
+    "packages": [
+      "extensions/*"
+    ]
+  },
+  "trustedDependencies": [
+    "@shopify/plugin-cloudflare"
+  ],
+  "resolutions": {
+    "@graphql-tools/url-loader": "8.0.16",
+    "@graphql-codegen/client-preset": "4.7.0",
+    "@graphql-codegen/typescript-operations": "4.5.0",
+    "minimatch": "9.0.5"
+  },
+  "overrides": {
+    "@graphql-tools/url-loader": "8.0.16",
+    "@graphql-codegen/client-preset": "4.7.0",
+    "@graphql-codegen/typescript-operations": "4.5.0",
+    "minimatch": "9.0.5"
+  }
 }
