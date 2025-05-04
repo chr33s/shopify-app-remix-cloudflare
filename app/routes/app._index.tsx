@@ -1,6 +1,6 @@
 import { useEffect } from "react";
-import type { ActionFunctionArgs, LoaderFunctionArgs } from "@remix-run/node";
-import { useFetcher } from "@remix-run/react";
+import type { ActionFunctionArgs, LoaderFunctionArgs } from "react-router";
+import { useFetcher } from "react-router";
 import {
   Page,
   Layout,

@@ -1,19 +1,8 @@
-import {
-  vitePlugin as remix,
-  cloudflareDevProxyVitePlugin,
-} from "@remix-run/dev";
-import { installGlobals } from "@remix-run/node";
+import { cloudflare } from "@cloudflare/vite-plugin";
+import { reactRouter } from "@react-router/dev/vite";
+import { fileURLToPath } from "node:url";
 import { defineConfig, type UserConfig } from "vite";
 import tsconfigPaths from "vite-tsconfig-paths";
-import { getLoadContext } from "./load-context";
-
-declare module "@remix-run/cloudflare" {
-  interface Future {
-    v3_singleFetch: true;
-  }
-}
-
-installGlobals({ nativeFetch: true });
 
 // Related: https://github.com/remix-run/remix/issues/2835#issuecomment-1144102176
 // Replace the HOST env var with SHOPIFY_APP_URL so that it doesn't break the remix server. The CLI will eventually
@@ -61,20 +50,8 @@ export default defineConfig({
     },
   },
   plugins: [
-    cloudflareDevProxyVitePlugin({
-      getLoadContext,
-    }),
-    remix({
-      ignoredRouteFiles: ["**/.*"],
-      future: {
-        v3_fetcherPersist: true,
-        v3_relativeSplatPath: true,
-        v3_throwAbortReason: true,
-        v3_lazyRouteDiscovery: true,
-        v3_singleFetch: false,
-        v3_routeConfig: true,
-      },
-    }),
+    cloudflare({ viteEnvironment: { name: "ssr" } }),
+    reactRouter(),
     tsconfigPaths(),
   ],
   build: {
@@ -87,9 +64,17 @@ export default defineConfig({
     },
   },
   resolve: {
+    alias: [
+      {
+        find: "@remix-run/react",
+        replacement: fileURLToPath(
+          new URL("node_modules/react-router/dist/production", import.meta.url)
+        ),
+      },
+    ],
     mainFields: ["browser", "module", "main"],
   },
   optimizeDeps: {
-    include: ["@shopify/app-bridge-react", "@shopify/polaris"],
+    include: ["@shopify/polaris"],
   },
 }) satisfies UserConfig;
