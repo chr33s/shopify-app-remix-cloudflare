@@ -1,5 +1,5 @@
 {
-  "name": "shopify-app-remix-cloudflare",
+  "name": "shopify-app-cloudflare",
   "description": "Build a full-stack web application with Remix.",
   "cloudflare": {
     "label": "Remix Framework Starter",
