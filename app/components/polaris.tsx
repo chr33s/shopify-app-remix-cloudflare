@@ -136,7 +136,7 @@ export const RemixPolarisLink = React.forwardRef<
   LinkLikeComponentProps
 >((props, ref) => {
   React.useEffect(() => {
-    console.log(props, window.location);
+    console.log(props.url, window.location.search);
   }, []);
   return <Link {...props} to={props.url ?? props.to} ref={ref} />
 }) as LinkLikeComponent;

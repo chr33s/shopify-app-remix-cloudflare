@@ -1,4 +1,5 @@
 name = "remix"
+port = 8080
 roles = ["frontend", "backend"]
 webhooks_path = "/webhooks/app/uninstalled"
 
