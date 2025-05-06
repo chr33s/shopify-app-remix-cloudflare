@@ -66,6 +66,7 @@ export default defineConfig({
   resolve: {
     alias: [
       {
+        // Source: https://github.com/grocco/flarify/blob/main/vite.config.ts
         find: "@remix-run/react",
         replacement: fileURLToPath(
           new URL("node_modules/react-router/dist/production", import.meta.url)

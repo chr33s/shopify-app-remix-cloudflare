@@ -1,4 +1,6 @@
-import { type AppLoadContext, createRequestHandler } from "react-router";
+import { createRequestHandler } from "react-router";
+
+import { sessionStorage } from "~/shopify.server";
 
 declare module "react-router" {
 	export interface AppLoadContext {
@@ -16,8 +18,12 @@ const requestHandler = createRequestHandler(
 
 export default {
 	async fetch(request, env, ctx) {
+    sessionStorage.setNamespace(env.SESSIONS);
 		return requestHandler(request, {
-			cloudflare: { env, ctx },
-		});
+      cloudflare: {
+        env,
+        ctx,
+      },
+    });
 	},
 } satisfies ExportedHandler<Env>;
